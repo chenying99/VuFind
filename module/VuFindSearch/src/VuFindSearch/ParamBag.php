@@ -143,16 +143,6 @@ class ParamBag
     }
 
     /**
-     * Return array of request parameters.
-     *
-     * @return array
-     */
-    public function params()
-    {
-        return $this->params;
-    }
-
-    /**
      * Merge with another parameter bag.
      *
      * @param ParamBag $bag Parameter bag to merge with
@@ -190,6 +180,23 @@ class ParamBag
     public function getArrayCopy()
     {
         return $this->params;
+    }
+
+    /**
+     * Exchange the parameter array.
+     *
+     * @param array $input New parameters
+     *
+     * @return array Old parameters
+     */
+    public function exchangeArray(array $input)
+    {
+        $current = $this->params;
+        $this->params = array();
+        foreach ($input as $key => $value) {
+            $this->set($key, $value);
+        }
+        return $current;
     }
 
     /**
